@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Campus | A Smarter Campus for a Better Tomorrow</title>
+  <meta name="description" content="Smart Campus: connected learning, intelligent facilities, and a greener future for students." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #061426;
+      --bg-alt: #0e1c2f;
+      --bg-deep: #020e21;
+      --surface: #132033;
+      --surface-2: #1d2a3e;
+      --surface-3: #28354a;
+      --primary: #4edea3;
+      --primary-strong: #10b981;
+      --secondary: #89ceff;
+      --text: #d6e3fe;
+      --text-muted: #bbcabf;
+      --danger: #ffb4ab;
+      --focus: #89ceff;
+      --font-body: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --font-display: "Space Grotesk", "Plus Jakarta Sans", system-ui, sans-serif;
+      --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; }
+    h1, h2, h3, p { margin: 0; }
+    button, input { font: inherit; }
+
+    :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 9999px; }
+
+    .skip-link {
+      position: absolute; left: 16px; top: -48px; z-index: 100;
+      background: var(--primary); color: #003824; padding: 8px 16px;
+      border-radius: 9999px; font-weight: 700; text-decoration: none;
+    }
+    .skip-link:focus { top: 16px; }
+
+    .container { width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 24px; }
+    .mono { font-family: var(--font-mono); letter-spacing: 0.05em; }
+    .eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.11em;
+      text-transform: uppercase; color: var(--primary);
+    }
+    .sample-tag {
+      display: inline-block; font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted);
+      border: 1px solid rgba(187, 202, 191, 0.25); border-radius: 9999px; padding: 2px 8px;
+    }
+
+    /* ---------- Header ---------- */
+    .site-header {
+      position: fixed; inset: 0 0 auto 0; z-index: 50;
+      background: rgba(6, 20, 38, 0.8);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+    }
+    .header-inner { height: 80px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .brand-mark {
+      width: 32px; height: 32px; border-radius: 9999px;
+      background: radial-gradient(circle at 30% 30%, var(--primary), var(--secondary));
+      box-shadow: 0 0 16px rgba(78, 222, 163, 0.35);
+    }
+    .brand-name {
+      font-family: var(--font-display); font-weight: 500; font-size: 20px;
+      letter-spacing: -0.5px; text-transform: uppercase; color: var(--text);
+    }
+    .nav-links {
+      display: flex; gap: 8px; list-style: none; margin: 0; padding: 4px;
+      background: rgba(14, 28, 47, 0.6); border-radius: 9999px;
+    }
+    .nav-links a {
+      display: block; padding: 6px 16px; border-radius: 9999px; text-decoration: none;
+      font-size: 14px; font-weight: 600; color: var(--text-muted); transition: background 0.2s, color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); background: rgba(137, 206, 255, 0.08); }
+    .nav-links a.active { background: var(--primary-strong); color: #00422b; }
+    .header-actions { display: flex; align-items: center; gap: 8px; }
+    .btn-ghost {
+      padding: 10px 20px; border-radius: 9999px; text-decoration: none; font-size: 14px;
+      font-weight: 600; color: var(--secondary); background: rgba(137, 206, 255, 0.1);
+      transition: background 0.2s;
+    }
+    .btn-ghost:hover { background: rgba(137, 206, 255, 0.2); }
+    .btn-primary {
+      padding: 10px 20px; border-radius: 9999px; text-decoration: none; font-size: 14px;
+      font-weight: 700; color: #003824; background: var(--primary);
+      box-shadow: 0 4px 10px rgba(16, 185, 129, 0.35); border: 0; cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(16, 185, 129, 0.45); }
+    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .menu-toggle {
+      display: none; width: 40px; height: 40px; border-radius: 9999px; border: 0;
+      background: var(--surface-2); color: var(--text); cursor: pointer; align-items: center; justify-content: center;
+    }
+    .menu-toggle span, .menu-toggle span::before, .menu-toggle span::after {
+      display: block; width: 18px; height: 2px; background: currentColor; border-radius: 2px; content: "";
+      position: relative;
+    }
+    .menu-toggle span::before { position: absolute; transform: translateY(-6px); }
+    .menu-toggle span::after { position: absolute; transform: translateY(6px); }
+
+    /* ---------- Hero ---------- */
+    main { padding-top: 80px; }
+    .hero {
+      position: relative; overflow: hidden; padding: 56px 0 48px;
+      background:
+        radial-gradient(60% 40% at 50% 0%, rgba(78, 222, 163, 0.12), transparent 70%),
+        radial-gradient(40% 35% at 95% 35%, rgba(14, 165, 233, 0.08), transparent 70%),
+        var(--bg);
+    }
+    .hero-inner { display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border-radius: 9999px;
+      background: rgba(29, 42, 62, 0.8); box-shadow: 0 0 24px rgba(78, 222, 163, 0.15);
+    }
+    .pill .dot { width: 8px; height: 8px; border-radius: 9999px; background: var(--primary); box-shadow: 0 0 10px var(--primary); }
+    .hero h1 {
+      font-family: var(--font-display); font-weight: 700; font-size: 56px; line-height: 1.15;
+      letter-spacing: -1.4px; color: var(--text); max-width: 896px; margin-top: 8px;
+    }
+    .gradient-text {
+      background: linear-gradient(90deg, var(--primary), #68fcbf 50%, var(--secondary));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .hero p.lead { font-size: 18px; color: var(--text-muted); max-width: 768px; line-height: 1.6; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; padding-top: 8px; }
+    .btn-hero {
+      display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; border-radius: 9999px;
+      font-size: 14px; font-weight: 700; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-hero:hover { transform: translateY(-1px); }
+    .btn-hero.solid { background: var(--primary); color: #003824; box-shadow: 0 8px 15px rgba(78, 222, 163, 0.35); }
+    .btn-hero.glass {
+      background: rgba(29, 42, 62, 0.6); color: var(--secondary); font-weight: 600;
+      backdrop-filter: blur(6px); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Dashboard showcase (sample data, illustrative only) */
+    .showcase {
+      margin-top: 40px; width: 100%; padding: 16px 16px 16px;
+      background: rgba(2, 14, 33, 0.8); border-radius: 48px;
+      box-shadow: 0 20px 60px -15px rgba(0, 0, 0, 0.7); text-align: left;
+    }
+    .showcase-bar {
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+      padding: 10px 16px; background: rgba(14, 28, 47, 0.7); border-radius: 32px 32px 0 0;
+      margin: -16px -16px 0;
+    }
+    .showcase-bar .lights { display: flex; gap: 8px; align-items: center; }
+    .showcase-bar .lights i { width: 12px; height: 12px; border-radius: 9999px; display: block; }
+    .showcase-meta { display: flex; gap: 16px; align-items: center; font-size: 11px; color: var(--primary); flex-wrap: wrap; }
+    .showcase-stage {
+      position: relative; height: 560px; margin-top: 16px; border-radius: 32px; overflow: hidden;
+      background:
+        linear-gradient(rgba(78, 222, 163, 0.06) 1px, transparent 1px) 0 0 / 40px 40px,
+        linear-gradient(90deg, rgba(137, 206, 255, 0.06) 1px, transparent 1px) 0 0 / 40px 40px,
+        radial-gradient(circle at 50% 45%, rgba(78, 222, 163, 0.18), transparent 55%),
+        linear-gradient(180deg, #0b2236 0%, #061426 100%);
+    }
+    .showcase-stage::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(to top, #020e21 0%, rgba(2, 14, 33, 0) 45%);
+    }
+    .showcase-caption {
+      position: absolute; left: 50%; bottom: 16px; transform: translateX(-50%); z-index: 2;
+      font-size: 12px; color: var(--text-muted); text-align: center; white-space: nowrap;
+    }
+    .widget {
+      position: absolute; z-index: 3; width: 290px; max-width: calc(100% - 48px);
+      padding: 16px; background: rgba(19, 32, 51, 0.9);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    }
+    .widget .label { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+    .widget .value { font-family: var(--font-display); font-size: 20px; font-weight: 500; color: var(--text); margin-top: 4px; }
+    .widget .note { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+    .widget .bar { height: 6px; border-radius: 9999px; background: var(--surface-2); margin-top: 10px; overflow: hidden; }
+    .widget .bar span { display: block; height: 100%; background: linear-gradient(90deg, var(--primary), var(--secondary)); border-radius: 9999px; }
+    .w1 { left: 24px; top: 24px; }
+    .w2 { right: 24px; top: 24px; }
+    .w3 { left: 24px; bottom: 56px; }
+    .w4 { right: 24px; bottom: 56px; text-align: right; }
+
+    /* ---------- Metrics ribbon ---------- */
+    .metrics { background: var(--bg-alt); padding: 24px 0; }
+    .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .metric {
+      display: flex; align-items: center; gap: 16px; padding: 8px;
+      background: rgba(19, 32, 51, 0.6); backdrop-filter: blur(6px);
+    }
+    .metric-icon {
+      width: 48px; height: 48px; border-radius: 9999px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 18px;
+    }
+    .metric .figure { font-family: var(--font-display); font-weight: 700; font-size: 24px; letter-spacing: -0.6px; line-height: 1.3; }
+    .metric .caption { font-size: 12px; color: var(--text-muted); }
+
+    /* ---------- Key highlights ---------- */
+    .section { padding: 56px 0; }
+    .section-header { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; }
+    .section-header h2 {
+      font-family: var(--font-display); font-weight: 700; font-size: 40px; letter-spacing: -1px;
+      color: var(--text); margin-top: 8px; line-height: 1.2;
+    }
+    .section-header p { color: var(--text-muted); font-size: 16px; max-width: 672px; margin-top: 8px; }
+    .pill-quiet {
+      display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 9999px;
+      background: var(--surface-2); font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);
+    }
+    .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .card {
+      display: flex; flex-direction: column; justify-content: space-between; gap: 24px;
+      padding: 24px; background: var(--surface); border-radius: 32px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35); }
+    .card-top { display: flex; justify-content: space-between; align-items: center; }
+    .card-icon {
+      width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+    }
+    .card-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 4px 12px; border-radius: 9999px; }
+    .card h3 { font-family: var(--font-display); font-weight: 700; font-size: 24px; line-height: 1.3; color: var(--text); margin-top: 20px; }
+    .card p { color: var(--text-muted); font-size: 14px; margin-top: 12px; line-height: 1.6; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+    .chip {
+      background: var(--surface-3); color: var(--text); font-size: 11px; font-weight: 600;
+      padding: 4px 10px; border-radius: 9999px; line-height: 1.4;
+    }
+
+    /* ---------- Daily view (tabs) ---------- */
+    .daily { background: var(--bg-deep); padding: 56px 0; }
+    .daily-intro { text-align: center; display: flex; flex-direction: column; gap: 8px; align-items: center; margin-bottom: 40px; }
+    .daily-intro h2 {
+      font-family: var(--font-display); font-weight: 700; font-size: 40px; letter-spacing: -1px;
+      color: var(--text); line-height: 1.2;
+    }
+    .daily-intro p { color: var(--text-muted); max-width: 640px; }
+    .panel-wrap {
+      max-width: 1024px; margin: 0 auto; padding: 40px; background: var(--surface); border-radius: 48px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+    .tablist { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tab {
+      border: 0; cursor: pointer; padding: 14px 24px; border-radius: 9999px;
+      background: var(--surface-2); color: var(--text-muted); font-size: 14px; font-weight: 600;
+      transition: background 0.2s, color 0.2s;
+    }
+    .tab[aria-selected="true"] { background: var(--primary); color: #003824; box-shadow: 0 4px 10px rgba(78, 222, 163, 0.3); font-weight: 700; }
+    .panel { display: grid; grid-template-columns: 7fr 5fr; gap: 24px; margin-top: 24px; align-items: center; }
+    .panel[hidden] { display: none; }
+    .panel-copy { display: flex; flex-direction: column; gap: 16px; }
+    .panel-copy .status { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--primary); font-family: var(--font-mono); }
+    .panel-copy .status i { width: 8px; height: 8px; border-radius: 9999px; background: var(--primary); display: block; }
+    .panel-copy h3 { font-family: var(--font-display); font-weight: 700; font-size: 30px; line-height: 1.25; color: var(--text); letter-spacing: -0.4px; }
+    .panel-copy p { color: var(--text-muted); font-size: 15px; line-height: 1.7; }
+    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px; }
+    .stat { background: var(--bg-alt); padding: 16px; }
+    .stat .k { font-size: 11px; font-weight: 600; color: var(--text-muted); }
+    .stat .v { font-family: var(--font-display); font-size: 24px; font-weight: 700; margin-top: 4px; }
+    .panel-visual {
+      position: relative; height: 280px; border-radius: 32px; overflow: hidden;
+      background:
+        radial-gradient(circle at 70% 30%, rgba(137, 206, 255, 0.25), transparent 50%),
+        radial-gradient(circle at 25% 75%, rgba(78, 222, 163, 0.25), transparent 50%),
+        linear-gradient(160deg, #15304a, #0b1d30);
+      display: flex; align-items: flex-end; padding: 16px;
+    }
+    .panel-visual .tag {
+      background: rgba(6, 20, 38, 0.85); color: var(--text); font-family: var(--font-mono); font-size: 11px;
+      padding: 6px 10px; border-radius: 16px;
+    }
+    .panel-visual .flag { position: absolute; top: 16px; right: 16px; font-size: 11px; font-weight: 700; color: var(--primary); }
+
+    /* ---------- Manifesto ---------- */
+    .manifesto {
+      position: relative; overflow: hidden; background: var(--bg-alt); padding: 72px 24px; text-align: center;
+    }
+    .manifesto::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(50% 50% at 50% 50%, rgba(78, 222, 163, 0.12), transparent 75%);
+    }
+    .manifesto-inner { position: relative; max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    .emblem {
+      width: 64px; height: 64px; border-radius: 9999px; background: rgba(78, 222, 163, 0.1);
+      box-shadow: 0 0 30px rgba(78, 222, 163, 0.25); display: flex; align-items: center; justify-content: center;
+      font-size: 24px; color: var(--primary);
+    }
+    .manifesto blockquote { margin: 8px 0 0; }
+    .manifesto blockquote p {
+      font-family: var(--font-display); font-weight: 700; font-size: 44px; line-height: 1.25;
+      letter-spacing: -1.1px; color: var(--text);
+    }
+    .manifesto .support { color: var(--text-muted); font-size: 18px; max-width: 672px; line-height: 1.6; }
+    .manifesto .cta-row { padding-top: 24px; }
+    .btn-outline {
+      padding: 16px 32px; border-radius: 9999px; border: 0; cursor: pointer; text-decoration: none;
+      font-size: 14px; font-weight: 600; background: var(--surface-2); color: var(--secondary);
+      transition: background 0.2s;
+    }
+    .btn-outline:hover { background: var(--surface-3); }
+    .btn-solid-lg {
+      padding: 16px 32px; border-radius: 9999px; border: 0; cursor: pointer; text-decoration: none;
+      font-size: 14px; font-weight: 700; background: var(--primary); color: #003824;
+      box-shadow: 0 6px 12px rgba(78, 222, 163, 0.4);
+    }
+    .compliance { display: flex; flex-wrap: wrap; gap: 24px; justify-content: center; opacity: 0.85; padding-top: 24px; }
+    .compliance span { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+    .compliance span::before { content: "\25C6  "; color: var(--primary); }
+
+    /* ---------- Footer ---------- */
+    .site-footer { background: var(--bg-deep); padding: 40px 0 24px; }
+    .footer-grid { display: grid; grid-template-columns: 5fr 3fr 4fr; gap: 24px; }
+    .footer-brand h2 { font-family: var(--font-display); font-weight: 500; font-size: 20px; letter-spacing: -0.5px; text-transform: uppercase; display: flex; gap: 8px; align-items: center; }
+    .footer-brand h2 i { width: 10px; height: 10px; border-radius: 9999px; background: var(--primary); box-shadow: 0 0 12px var(--primary); display: block; }
+    .footer-brand p { color: var(--text-muted); font-size: 14px; max-width: 448px; margin-top: 16px; line-height: 1.6; }
+    .status-pill {
+      display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; padding: 8px 16px;
+      border-radius: 9999px; background: var(--surface); color: var(--primary); font-size: 12px; font-weight: 600;
+    }
+    .status-pill i { width: 8px; height: 8px; border-radius: 9999px; background: var(--primary); display: block; }
+    .footer-col h3 { font-size: 14px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text); margin-bottom: 12px; }
+    .footer-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+    .footer-col a { color: var(--text-muted); font-size: 14px; text-decoration: none; }
+    .footer-col a:hover { color: var(--text); text-decoration: underline; }
+
+    .form-card { background: var(--surface); border-radius: 24px; padding: 20px; }
+    .form-card h3 { font-size: 14px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text); }
+    .form-card > p { font-size: 13px; color: var(--text-muted); margin-top: 6px; }
+    .registration-form { display: grid; gap: 12px; margin-top: 16px; }
+    .field label { display: block; font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; }
+    .field input {
+      width: 100%; padding: 11px 16px; border-radius: 9999px; border: 1px solid transparent;
+      background: var(--surface-2); color: var(--text); font-size: 14px; outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .field input::placeholder { color: rgba(187, 202, 191, 0.6); }
+    .field input:focus-visible { border-color: var(--secondary); box-shadow: 0 0 0 3px rgba(137, 206, 255, 0.25); }
+    .field input[aria-invalid="true"] { border-color: var(--danger); }
+    .field .error { display: none; font-size: 12px; color: var(--danger); margin-top: 4px; }
+    .field .error.show { display: block; }
+    .registration-form .btn-primary { width: 100%; padding: 12px 20px; font-size: 13px; }
+    .form-status { min-height: 20px; font-size: 13px; margin-top: 4px; }
+    .form-status.ok { color: var(--primary); }
+    .form-status.bad { color: var(--danger); }
+    .form-note { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+      margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(187, 202, 191, 0.1);
+    }
+    .footer-bottom p, .footer-bottom a { font-size: 12px; color: var(--text-muted); text-decoration: none; }
+    .footer-bottom nav { display: flex; gap: 16px; flex-wrap: wrap; }
+    .footer-bottom nav a:hover { color: var(--text); text-decoration: underline; }
+
+    .toast {
+      position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px); z-index: 60;
+      background: var(--surface-2); color: var(--text); padding: 12px 20px; border-radius: 9999px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); font-size: 13px; opacity: 0; pointer-events: none;
+      transition: opacity 0.25s, transform 0.25s; max-width: calc(100% - 32px);
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 1200px) {
+      .nav-links a { padding: 6px 12px; font-size: 13px; }
+      .cards { grid-template-columns: repeat(2, 1fr); }
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid > :last-child { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 900px) {
+      .menu-toggle { display: inline-flex; }
+      .nav-links {
+        position: absolute; top: 80px; left: 16px; right: 16px; flex-direction: column;
+        border-radius: 24px; padding: 8px; background: var(--bg-alt); display: none;
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.5);
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 12px 16px; }
+      .header-actions .btn-ghost { display: none; }
+      .hero h1 { font-size: 40px; letter-spacing: -0.8px; }
+      .showcase-stage { height: auto; display: flex; flex-direction: column; gap: 16px; padding: 16px 16px 40px; }
+      .widget { position: relative; inset: auto; width: 100%; max-width: none; }
+      .showcase-caption { position: static; transform: none; white-space: normal; margin-top: 4px; }
+      .showcase-stage::after { display: none; }
+      .panel { grid-template-columns: 1fr; }
+      .panel-wrap { padding: 24px; }
+      .section-header h2, .daily-intro h2 { font-size: 32px; }
+      .manifesto blockquote p { font-size: 30px; }
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 0 16px; }
+      .hero { padding-top: 40px; }
+      .hero p.lead { font-size: 16px; }
+      .metrics-grid, .cards { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .btn-hero { width: 100%; justify-content: center; }
+      .cta-row { flex-direction: column; align-items: stretch; }
+      .stats { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="#overview" aria-label="Smart Campus home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">Smart Campus</span>
+      </a>
+
+      <nav aria-label="Primary">
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#overview" class="active">Overview</a></li>
+          <li><a href="#highlights">Key Highlights</a></li>
+          <li><a href="#daily">Smart Solutions</a></li>
+          <li><a href="#metrics">Campus Metrics</a></li>
+          <li><a href="#contact">Student Portal</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <a class="btn-ghost" href="#metrics">Explore Campus</a>
+        <a class="btn-primary" href="#contact">Contact Campus</a>
+        <button class="menu-toggle" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="overview" aria-labelledby="hero-title">
+      <div class="container hero-inner">
+        <div class="pill">
+          <span class="dot" aria-hidden="true"></span>
+          <span class="eyebrow">Next-generation campus infrastructure • Powered by AI &amp; IoT</span>
+        </div>
+
+        <h1 id="hero-title">A Smarter Campus for a <span class="gradient-text">Better Tomorrow</span></h1>
+
+        <p class="lead">
+          Imagine a campus where getting around is easier, classrooms and facilities respond to real needs,
+          energy is used wisely, and student services work for everyone. Connected learning, intelligent
+          facilities, and sustainable solutions come together to support student well-being and a greener future.
+        </p>
+
+        <div class="cta-row">
+          <a class="btn-hero solid" href="#daily">Explore Smart Campus</a>
+          <a class="btn-hero glass" href="#highlights">Discover Our Solutions</a>
+        </div>
+
+        <!-- Dashboard showcase: sample data only, not connected to sensors or campus systems -->
+        <figure class="showcase" aria-labelledby="showcase-title">
+          <div class="showcase-bar">
+            <div class="lights" aria-hidden="true">
+              <i style="background: rgba(255, 180, 171, 0.7)"></i>
+              <i style="background: rgba(69, 223, 164, 0.7)"></i>
+              <i style="background: rgba(78, 222, 163, 0.7)"></i>
+              <span class="mono" style="margin-left: 8px; font-size: 11px; color: var(--text-muted)">NODE_CLUSTER // CAMPUS_CORE_01</span>
+            </div>
+            <div class="showcase-meta">
+              <span class="sample-tag">Sample data for prototype</span>
+              <span class="mono" style="color: var(--text-muted)">Location: Campus core (illustrative)</span>
+            </div>
+          </div>
+
+          <div class="showcase-stage" role="img" aria-describedby="showcase-caption">
+            <article class="widget w1" style="border-left: 0">
+              <div class="label" style="color: var(--primary)"><i style="width:10px;height:10px;border-radius:9999px;background:var(--primary);box-shadow:0 0 10px var(--primary)" aria-hidden="true"></i>Atmospheric mesh</div>
+              <div class="value">AQI 18 • Optimal</div>
+              <div class="note">Air quality across 24 campus zones (sample)</div>
+            </article>
+            <article class="widget w2">
+              <div class="label" style="color: var(--secondary)">Energy grid</div>
+              <div class="value">94.2% Renewable</div>
+              <div class="bar"><span style="width: 94%"></span></div>
+            </article>
+            <article class="widget w3">
+              <div class="label" style="color: #45dfa4">Campus transit</div>
+              <div class="value">99.4% On Schedule</div>
+              <div class="note">Shuttles and campus loop (sample)</div>
+            </article>
+            <article class="widget w4">
+              <div class="label" style="color: var(--primary); justify-content: flex-end">Energy savings</div>
+              <div class="value" style="color: var(--primary)">-32% Carbon Footprint</div>
+              <div class="note">Versus the prior-year baseline (sample)</div>
+            </article>
+            <p class="showcase-caption" id="showcase-caption">Illustrative prototype. Values are sample data, not live campus systems.</p>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ METRICS RIBBON ============ -->
+    <section class="metrics" id="metrics" aria-label="Campus status metrics">
+      <div class="container">
+        <ul class="metrics-grid" style="list-style:none;margin:0;padding:0">
+          <li class="metric">
+            <div class="metric-icon" style="background: rgba(78,222,163,0.1); color: var(--primary)" aria-hidden="true">◉</div>
+            <div>
+              <div class="figure">1.2M+</div>
+              <div class="caption">Students connected (sample)</div>
+            </div>
+          </li>
+          <li class="metric">
+            <div class="metric-icon" style="background: rgba(0,185,130,0.2); color: #45dfa4" aria-hidden="true">↓</div>
+            <div>
+              <div class="figure" style="color:#45dfa4">48%</div>
+              <div class="caption">Lower carbon emissions (sample)</div>
+            </div>
+          </li>
+          <li class="metric">
+            <div class="metric-icon" style="background: rgba(137,206,255,0.15); color: var(--secondary)" aria-hidden="true">◷</div>
+            <div>
+              <div class="figure">15 Min</div>
+              <div class="caption">Average campus commute (sample)</div>
+            </div>
+          </li>
+          <li class="metric">
+            <div class="metric-icon" style="background: rgba(78,222,163,0.1); color: var(--primary)" aria-hidden="true">☀</div>
+            <div>
+              <div class="figure">100%</div>
+              <div class="caption">LED sensor lighting coverage (sample)</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ KEY HIGHLIGHTS / SOLUTIONS ============ -->
+    <section class="section" id="highlights" aria-labelledby="highlights-title">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Core pillars of smart campus innovation</p>
+            <h2 id="highlights-title">Key Highlights</h2>
+            <p>
+              Engineered around the student experience. Our campus framework blends connected
+              systems with sustainable facilities to make everyday learning and living easier.
+            </p>
+          </div>
+          <span class="pill-quiet">System state: optimal (sample)</span>
+        </div>
+
+        <div class="cards">
+          <article class="card">
+            <div>
+              <div class="card-top">
+                <div class="card-icon" style="background: rgba(137,206,255,0.1); color: var(--secondary)" aria-hidden="true">⇄</div>
+                <span class="card-tag" style="background: rgba(137,206,255,0.1); color: var(--secondary)">Transit</span>
+              </div>
+              <h3>Smart Campus Mobility</h3>
+              <p>Move across campus with smarter route planning, connected shuttles, and better parking and transit information.</p>
+            </div>
+            <div class="chips">
+              <span class="chip">Real-time shuttle tracking</span>
+              <span class="chip">Campus navigation</span>
+              <span class="chip">Zero-emission fleet</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <div>
+              <div class="card-top">
+                <div class="card-icon" style="background: rgba(78,222,163,0.1); color: var(--primary)" aria-hidden="true">❦</div>
+                <span class="card-tag" style="background: rgba(78,222,163,0.1); color: var(--primary)">Ecology</span>
+              </div>
+              <h3>Clean and Green Campus</h3>
+              <p>Promote cleaner air, greener spaces, and responsible energy use for a healthier campus community.</p>
+            </div>
+            <div class="chips">
+              <span class="chip">Biophilic design</span>
+              <span class="chip">Solar canopies</span>
+              <span class="chip">Air quality monitoring</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <div>
+              <div class="card-top">
+                <div class="card-icon" style="background: rgba(69,223,164,0.1); color: #45dfa4" aria-hidden="true">♻</div>
+                <span class="card-tag" style="background: rgba(69,223,164,0.1); color: #45dfa4">Circularity</span>
+              </div>
+              <h3>Intelligent Waste Management</h3>
+              <p>Make waste collection more efficient with smart bin monitoring, optimized collection routes, and better recycling.</p>
+            </div>
+            <div class="chips">
+              <span class="chip">Automated fill sensors</span>
+              <span class="chip">Eco-route optimization</span>
+              <span class="chip">Zero-waste goals</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <div>
+              <div class="card-top">
+                <div class="card-icon" style="background: rgba(0,162,230,0.2); color: #c9e6ff" aria-hidden="true">⛨</div>
+                <span class="card-tag" style="background: rgba(0,162,230,0.2); color: #c9e6ff">Resilience</span>
+              </div>
+              <h3>Campus Safety and Security</h3>
+              <p>Support safer campus life with intelligent lighting, emergency notifications, and faster coordination with campus services.</p>
+            </div>
+            <div class="chips">
+              <span class="chip">Adaptive lighting</span>
+              <span class="chip">Emergency alerts</span>
+              <span class="chip">Coordinated response</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ DAILY VIEW (TABS) ============ -->
+    <section class="daily" id="daily" aria-labelledby="daily-title">
+      <div class="container">
+        <div class="daily-intro">
+          <p class="eyebrow">Everyday campus experience</p>
+          <h2 id="daily-title">How It Works Through the Day</h2>
+          <p>Explore how smart campus systems adapt across the day, quietly keeping students safer, moving them smoothly, and using resources wisely.</p>
+        </div>
+
+        <div class="panel-wrap">
+          <div class="tablist" role="tablist" aria-label="Time of day">
+            <button class="tab" role="tab" id="tab-morning" aria-controls="panel-morning" aria-selected="true" tabindex="0">07:00 • Morning Commute</button>
+            <button class="tab" role="tab" id="tab-afternoon" aria-controls="panel-afternoon" aria-selected="false" tabindex="-1">13:00 • Afternoon Energy</button>
+            <button class="tab" role="tab" id="tab-evening" aria-controls="panel-evening" aria-selected="false" tabindex="-1">20:00 • Evening Safety</button>
+          </div>
+
+          <div class="panel" id="panel-morning" role="tabpanel" aria-labelledby="tab-morning">
+            <div class="panel-copy">
+              <p class="status"><i aria-hidden="true"></i>Peak mobility protocol active (sample)</p>
+              <h3>Dynamic Traffic Flow and Campus Transit Routing</h3>
+              <p>As students arrive for classes, the system coordinates shuttle timing and walkway signals so routes stay clear and waiting times stay short.</p>
+              <div class="stats">
+                <div class="stat"><div class="k">Wait time</div><div class="v" style="color: var(--primary)">-41%</div></div>
+                <div class="stat"><div class="k">Shuttle fleet</div><div class="v" style="color: var(--secondary)">100% Electric</div></div>
+              </div>
+            </div>
+            <div class="panel-visual" aria-label="Illustrative campus route visual">
+              <span class="flag">FLOW: 98.7% (sample)</span>
+              <span class="tag">CORRIDOR_04: CLEAR</span>
+            </div>
+          </div>
+
+          <div class="panel" id="panel-afternoon" role="tabpanel" aria-labelledby="tab-afternoon" hidden>
+            <div class="panel-copy">
+              <p class="status"><i aria-hidden="true"></i>Energy balancing active (sample)</p>
+              <h3>Smart Energy and Resource Management</h3>
+              <p>Classroom lighting and climate controls adjust to occupancy, while solar output is balanced against campus demand to cut waste.</p>
+              <div class="stats">
+                <div class="stat"><div class="k">Renewable share</div><div class="v" style="color: var(--primary)">94.2%</div></div>
+                <div class="stat"><div class="k">Idle load</div><div class="v" style="color: var(--secondary)">-18%</div></div>
+              </div>
+            </div>
+            <div class="panel-visual" aria-label="Illustrative energy visual">
+              <span class="flag">GRID: STABLE (sample)</span>
+              <span class="tag">BLOCK_B: OPTIMIZED</span>
+            </div>
+          </div>
+
+          <div class="panel" id="panel-evening" role="tabpanel" aria-labelledby="tab-evening" hidden>
+            <div class="panel-copy">
+              <p class="status"><i aria-hidden="true"></i>Safety monitoring active (sample)</p>
+              <h3>Campus Safety and Emergency Notifications</h3>
+              <p>Evening routes are lit adaptively, and students can receive timely alerts about campus conditions and emergency notices.</p>
+              <div class="stats">
+                <div class="stat"><div class="k">Lit pathways</div><div class="v" style="color: var(--primary)">100%</div></div>
+                <div class="stat"><div class="k">Alert response</div><div class="v" style="color: var(--secondary)">&lt; 1 min</div></div>
+              </div>
+            </div>
+            <div class="panel-visual" aria-label="Illustrative safety visual">
+              <span class="flag">LIGHTING: ADAPTIVE (sample)</span>
+              <span class="tag">ZONE_07: MONITORED</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ MANIFESTO ============ -->
+    <section class="manifesto" aria-labelledby="manifesto-title">
+      <div class="manifesto-inner">
+        <div class="emblem" aria-hidden="true">✦</div>
+        <blockquote>
+          <p id="manifesto-title">“The future of our campus starts with the choices we make today.”</p>
+        </blockquote>
+        <p class="support">
+          By bringing students, faculty, technology, and sustainable ideas together, we can build a campus that is
+          not only smarter but also more livable for generations to come.
+        </p>
+        <div class="cta-row">
+          <a class="btn-solid-lg btn-hero solid" href="#contact" style="box-shadow:0 6px 12px rgba(78,222,163,0.4)">Join the Student Advisory Council</a>
+          <button class="btn-outline" type="button" id="blueprint-btn">Download Campus Blueprint (PDF)</button>
+        </div>
+        <div class="compliance" aria-label="Campus commitments (sample)">
+          <span>Open civic data standard v4.2</span>
+          <span>Net-zero carbon pledged by 2030</span>
+          <span>End-to-end encrypted telemetry</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h2><i aria-hidden="true"></i>Smart Campus Initiative</h2>
+          <p>
+            Building connected, sustainable campus environments through intelligent facilities, renewable utilities,
+            and responsive student services designed to support learning and well-being.
+          </p>
+          <span class="status-pill"><i aria-hidden="true"></i>Campus grid: 99.98% operational (sample)</span>
+        </div>
+
+        <nav class="footer-col" aria-label="Campus modules">
+          <h3>Campus modules</h3>
+          <ul>
+            <li><a href="#highlights">Infrastructure</a></li>
+            <li><a href="#highlights">Mobility</a></li>
+            <li><a href="#highlights">Green energy</a></li>
+            <li><a href="#highlights">Safety</a></li>
+            <li><a href="#highlights">Open data</a></li>
+          </ul>
+        </nav>
+
+        <!-- Student contact / registration form: exactly three fields -->
+        <section class="footer-col" id="contact" aria-labelledby="contact-title">
+          <div class="form-card">
+            <h3 id="contact-title">Student contact &amp; registration</h3>
+            <p>Share your details to receive campus updates and register your interest.</p>
+
+            <form class="registration-form" id="registration-form" novalidate>
+              <div class="field">
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" autocomplete="name" placeholder="Your full name" required maxlength="80" aria-describedby="name-error" />
+                <div class="error" id="name-error" role="alert"></div>
+              </div>
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" autocomplete="email" placeholder="you@campus.edu" required maxlength="254" aria-describedby="email-error" />
+                <div class="error" id="email-error" role="alert"></div>
+              </div>
+              <div class="field">
+                <label for="phone">Phone</label>
+                <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="+91 98765 43210" required maxlength="25" aria-describedby="phone-error" />
+                <div class="error" id="phone-error" role="alert"></div>
+              </div>
+
+              <button class="btn-primary" type="submit" id="submit-btn">Submit</button>
+              <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
+            </form>
+          </div>
+        </section>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Smart Campus Initiative. Empowering connected, sustainable campus communities.</p>
+        <nav aria-label="Legal">
+          <a href="#top">Privacy Policy</a>
+          <a href="#top">Terms of Use</a>
+          <a href="#top">Accessibility Statement</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    (function () {
+      "use strict";
+
+      /* ----------------------------------------------------------------
+         CONFIGURATION
+         Paste your deployed Apps Script Web App URL below (ends in /exec).
+         ---------------------------------------------------------------- */
+      const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwD6ajik2whDqoEP96aT7GZPcONcZsGQrKTZVE-dZO5AdXXlQNDhtW5pigO5sfctc0-/exec";
+
+      /* ---------- Mobile navigation ---------- */
+      const menuToggle = document.getElementById("menu-toggle");
+      const navLinks = document.getElementById("nav-links");
+
+      menuToggle.addEventListener("click", function () {
+        const isOpen = navLinks.classList.toggle("open");
+        menuToggle.setAttribute("aria-expanded", String(isOpen));
+        menuToggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+      });
+
+      navLinks.querySelectorAll("a").forEach(function (link) {
+        link.addEventListener("click", function () {
+          navLinks.classList.remove("open");
+          menuToggle.setAttribute("aria-expanded", "false");
+          menuToggle.setAttribute("aria-label", "Open menu");
+        });
+      });
+
+      /* ---------- Active nav link on scroll ---------- */
+      const sectionLinks = Array.prototype.slice.call(navLinks.querySelectorAll("a"));
+      const trackedSections = sectionLinks
+        .map(function (a) { return document.querySelector(a.getAttribute("href")); })
+        .filter(Boolean);
+
+      if ("IntersectionObserver" in window && trackedSections.length) {
+        const observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            sectionLinks.forEach(function (a) {
+              a.classList.toggle("active", a.getAttribute("href") === "#" + entry.target.id);
+            });
+          });
+        }, { rootMargin: "-40% 0px -55% 0px" });
+        trackedSections.forEach(function (section) { observer.observe(section); });
+      }
+
+      /* ---------- Time-of-day tabs ---------- */
+      const tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+
+      function selectTab(tab) {
+        tabs.forEach(function (t) {
+          const selected = t === tab;
+          t.setAttribute("aria-selected", String(selected));
+          t.setAttribute("tabindex", selected ? "0" : "-1");
+          const panel = document.getElementById(t.getAttribute("aria-controls"));
+          if (panel) panel.hidden = !selected;
+        });
+        tab.focus();
+      }
+
+      tabs.forEach(function (tab, index) {
+        tab.addEventListener("click", function () { selectTab(tab); });
+        tab.addEventListener("keydown", function (event) {
+          let next = null;
+          if (event.key === "ArrowRight") next = tabs[(index + 1) % tabs.length];
+          if (event.key === "ArrowLeft") next = tabs[(index - 1 + tabs.length) % tabs.length];
+          if (event.key === "Home") next = tabs[0];
+          if (event.key === "End") next = tabs[tabs.length - 1];
+          if (next) {
+            event.preventDefault();
+            selectTab(next);
+          }
+        });
+      });
+
+      /* ---------- Blueprint download (file not yet provided) ---------- */
+      const blueprintBtn = document.getElementById("blueprint-btn");
+      blueprintBtn.addEventListener("click", function () {
+        showToast("The campus blueprint PDF is not available yet. Please check back soon.");
+      });
+
+      /* ---------- Toast helper ---------- */
+      const toast = document.getElementById("toast");
+      let toastTimer = null;
+
+      function showToast(message) {
+        toast.textContent = message;
+        toast.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () { toast.classList.remove("show"); }, 3500);
+      }
+
+      /* ---------- Registration form ---------- */
+      const form = document.getElementById("registration-form");
+      const nameInput = document.getElementById("name");
+      const emailInput = document.getElementById("email");
+      const phoneInput = document.getElementById("phone");
+      const submitBtn = document.getElementById("submit-btn");
+      const statusEl = document.getElementById("form-status");
+
+      const NAME_PATTERN = /^[\p{L}][\p{L}\p{M} .'-]*$/u;
+      const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+      function setFieldError(input, errorId, message) {
+        const errorEl = document.getElementById(errorId);
+        if (message) {
+          errorEl.textContent = message;
+          errorEl.classList.add("show");
+          input.setAttribute("aria-invalid", "true");
+        } else {
+          errorEl.textContent = "";
+          errorEl.classList.remove("show");
+          input.removeAttribute("aria-invalid");
+        }
+        return !message;
+      }
+
+      function validateForm() {
+        const name = nameInput.value.trim().replace(/\s+/g, " ");
+        const email = emailInput.value.trim().toLowerCase();
+        const phone = phoneInput.value.replace(/[\s().-]/g, "");
+
+        let valid = true;
+        valid = setFieldError(nameInput, "name-error",
+          name.length < 2 || name.length > 80 || !NAME_PATTERN.test(name)
+            ? "Please enter your name (2 to 80 letters)." : "") && valid;
+        valid = setFieldError(emailInput, "email-error",
+          !EMAIL_PATTERN.test(email) || email.length > 254
+            ? "Please enter a valid email address." : "") && valid;
+        valid = setFieldError(phoneInput, "phone-error",
+          !/^\+?[0-9]{7,15}$/.test(phone)
+            ? "Please enter a valid phone number (7 to 15 digits)." : "") && valid;
+
+        return { valid: valid, name: name, email: email, phone: phone };
+      }
+
+      function setSubmitting(isSubmitting) {
+        submitBtn.disabled = isSubmitting;
+        submitBtn.textContent = isSubmitting ? "Sending..." : "Submit";
+      }
+
+      function showSuccess() {
+        statusEl.className = "form-status ok";
+        statusEl.textContent = "Thanks. Your submission request was sent. We could not confirm the record was saved from this page.";
+        form.reset();
+        setSubmitting(false);
+      }
+
+      function showError() {
+        statusEl.className = "form-status bad";
+        statusEl.textContent = "We could not send your details. Please check your connection and try again.";
+        setSubmitting(false);
+      }
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        statusEl.className = "form-status";
+        statusEl.textContent = "";
+
+        const data = validateForm();
+        if (!data.valid) {
+          statusEl.className = "form-status bad";
+          statusEl.textContent = "Please correct the highlighted fields.";
+          const firstInvalid = form.querySelector('[aria-invalid="true"]');
+          if (firstInvalid) firstInvalid.focus();
+          return;
+        }
+
+        setSubmitting(true);
+
+        const url = SCRIPT_URL + "?" + new URLSearchParams({
+          name: data.name,
+          email: data.email,
+          phone: data.phone
+        });
+
+        fetch(url, { method: "GET", mode: "no-cors" })
+          .then(() => showSuccess())
+          .catch(() => showError());
+      });
+    })();
+  </script>
+</body>
+</html>
